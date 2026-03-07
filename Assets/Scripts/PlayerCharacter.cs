@@ -12,7 +12,7 @@ using UnityEngine;
         public void Hit()
         {
             health -= 1;
-            Debug.Log("Health: " +  health);
+            Debug.Log("Health: " + health);
             if (health == 0)
             {
                 Debug.Break();
