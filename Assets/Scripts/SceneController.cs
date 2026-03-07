@@ -4,6 +4,8 @@ using System.Linq;
 using Unity.VisualScripting;
 public class SceneController : MonoBehaviour
 {
+    private int score = 0;
+    [SerializeField] private UIManager manager;
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private GameObject iguanaPrefab;
     [SerializeField] private Transform iguanaSpawnPt;
@@ -15,7 +17,7 @@ public class SceneController : MonoBehaviour
     private int numberOfIguana = 7;
     public GameObject[] enemyInstantces;
     public GameObject[] iguanaInstantces;
-    public WanderingAI enemyAI;
+   
     private void Start()
     {
        
@@ -24,6 +26,7 @@ public class SceneController : MonoBehaviour
             iguanaInstantces = new GameObject[numberOfIguana];
             spawn();
             spawniguana();
+            manager.UpdateScore(score);
 
     }
     private void Update()
