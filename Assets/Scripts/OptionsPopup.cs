@@ -2,7 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 public class OptionsPopup : MonoBehaviour
 {
-
+    [SerializeField] private UIManager manager;
+    [SerializeField] private SettingsPopup settingsPopup;
     public void Open()
     {
         gameObject.SetActive(true);
@@ -10,6 +11,7 @@ public class OptionsPopup : MonoBehaviour
     public void Close()
     {
         gameObject.SetActive(false);
+      
     }
     public bool IsActive()
     {
@@ -17,7 +19,9 @@ public class OptionsPopup : MonoBehaviour
     }
     public void OnSettingsButton()
     {
+        Close();
         Debug.Log("settings clicked");
+        settingsPopup.Open();
     }
     public void OnExitGameButton()
     {
@@ -27,6 +31,7 @@ public class OptionsPopup : MonoBehaviour
     public void OnReturnToGameButton()
     {
         Debug.Log("return to game");
+        manager.SetGameActive(true);
         Close();
     }
 }

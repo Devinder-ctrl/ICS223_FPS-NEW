@@ -8,6 +8,7 @@ public class UIManager: MonoBehaviour {
     [SerializeField] private Image healthBar;
     [SerializeField] private Image crossHair;
     [SerializeField] private OptionsPopup optionsPopup;
+    [SerializeField] private SettingsPopup settingsPopup;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -22,6 +23,10 @@ public class UIManager: MonoBehaviour {
         {
             SetGameActive(false);
             optionsPopup.Open();
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape)  && optionsPopup.IsActive())
+        {
+
         }
     }
     public void UpdateScore(int newScore)
