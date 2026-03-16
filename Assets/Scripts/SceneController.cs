@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEngine.UI;
 public class SceneController : MonoBehaviour
 {
     private int score = 0;
@@ -9,6 +10,7 @@ public class SceneController : MonoBehaviour
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private GameObject iguanaPrefab;
     [SerializeField] private Transform iguanaSpawnPt;
+    [SerializeField] Slider difficultySlider;
     private GameObject enemy;
     private GameObject iguana;
     private Vector3 spawnPoint = new Vector3(0, 0, 5);
@@ -17,10 +19,28 @@ public class SceneController : MonoBehaviour
     private int numberOfIguana = 7;
     public GameObject[] enemyInstantces;
     public GameObject[] iguanaInstantces;
-   
+
+ 
+    private void Awake()
+    {
+        Messenger.AddListener(GameEvent.ENEMY_DEAD, OnEnemyDead);
+        Messenger<int>.AddListener(GameEvent.DIFFICULTY_CHANGED, OnDifficultyChanged);
+
+    }
+    private void OnDestroy()
+    {
+        Messenger.RemoveListener(GameEvent.ENEMY_DEAD, OnEnemyDead);
+        Messenger<int>.RemoveListener(GameEvent.DIFFICULTY_CHANGED, OnDifficultyChanged);
+    }
+
+    private void OnEnemyDead()
+    {
+        score++;
+        manager.UpdateScore(score);
+    }
     private void Start()
     {
-       
+        manager.UpdateScore(score);
             //instantiate array
             enemyInstantces = new GameObject[numberOfEnemies];
             iguanaInstantces = new GameObject[numberOfIguana];
@@ -46,6 +66,10 @@ public class SceneController : MonoBehaviour
 
 
                 enemyInstantces[i] = enemy;
+               
+                WanderingAI ai = enemyInstantces[i].GetComponent<WanderingAI>();
+                ai.SetDifficulty((int)difficultySlider.value);
+                
             }
         }
     }
@@ -91,5 +115,17 @@ public class SceneController : MonoBehaviour
             
         
     }
-   
+    private void OnDifficultyChanged(int newDifficulty)
+    {
+        Debug.Log("Scene.OnDifficultyChanged(" + newDifficulty + ")");
+        for (int i = 0; i < enemyInstantces.Length; i++)
+        {
+            WanderingAI ai = enemyInstantces[i].GetComponent<WanderingAI>();
+            ai.SetDifficulty(newDifficulty);
+        }
+    }
+   public int GetDifficulty()
+    {
+        return PlayerPrefs.GetInt("difficulty", 1);
+    }
 }

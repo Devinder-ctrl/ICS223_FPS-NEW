@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static System.Net.Mime.MediaTypeNames;
-public class SettingsPopup : MonoBehaviour
+public class SettingsPopup : BasePopup
 {
     [SerializeField] Button OKButton;
     [SerializeField] Button CancelButton;
@@ -23,6 +23,7 @@ public class SettingsPopup : MonoBehaviour
         gameObject.SetActive(false);
         optionsPopup.Open();
         PlayerPrefs.SetInt("difficulty", (int)difficultySlider.value);
+        Messenger<int>.Broadcast(GameEvent.DIFFICULTY_CHANGED, (int)difficultySlider.value);
     }
     public void OnCancelButton()
     {
@@ -38,23 +39,17 @@ public class SettingsPopup : MonoBehaviour
     {
         UpdateDifficulty(difficulty);
     }
-    public void Open()
+    override public void Open()
     { 
 
         //If the player changes the slider, and then hits cancel, we will need to reset the slider to its
         //current difficulty setting when we next open the panel.
+        base.Open();
         gameObject.SetActive(true);
         difficultySlider.value = PlayerPrefs.GetInt("difficulty", 1);
         UpdateDifficulty(difficultySlider.value);
     }
-    public void Close()
-    {
-        gameObject.SetActive(false);
-    }
-    public bool IsActive()
-    {
-        return gameObject.activeSelf;
-    }
+ 
     // Update is called once per frame
     void Update()
     {

@@ -9,11 +9,13 @@ public class UIManager: MonoBehaviour {
     [SerializeField] private Image crossHair;
     [SerializeField] private OptionsPopup optionsPopup;
     [SerializeField] private SettingsPopup settingsPopup;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         healthBar.fillAmount = 1;
         healthBar.color = Color.green;
+       
     }
 
     // Update is called once per frame

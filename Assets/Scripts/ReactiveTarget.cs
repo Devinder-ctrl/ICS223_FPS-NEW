@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ReactiveTarget : MonoBehaviour
 {
-    
+    bool isActive = true;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -20,10 +20,11 @@ public class ReactiveTarget : MonoBehaviour
 
         WanderingAI enemyAI = GetComponent<WanderingAI>();
         //enemy operation on the null reference would cause a crash so if it not null change the state to dead
-        if (enemyAI != null)
+        if (enemyAI != null && isActive == true)
         {
             enemyAI.ChangeState(EnemyStates.dead);
-
+            Messenger.Broadcast(GameEvent.ENEMY_DEAD);
+            isActive = false;
         }
         Animator enemyAnimator = GetComponent<Animator>();
         if (enemyAnimator != null)
