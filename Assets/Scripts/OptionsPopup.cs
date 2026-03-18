@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 public class OptionsPopup : BasePopup
 {
-    [SerializeField] private UIManager manager;
     [SerializeField] private SettingsPopup settingsPopup;
     
     public void OnSettingsButton()
@@ -19,7 +18,6 @@ public class OptionsPopup : BasePopup
     public void OnReturnToGameButton()
     {
         Debug.Log("return to game");
-        manager.SetGameActive(true);
         Close();
     }
 }

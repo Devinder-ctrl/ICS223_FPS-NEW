@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-public class MouseLook : MonoBehaviour
+public class MouseLook : ActiveDuringGameplay
 {
     public enum RotationAxes 
     {
@@ -23,7 +23,13 @@ public class MouseLook : MonoBehaviour
     {
         
     }
+    private void Awake()
+    {
+        Messenger.AddListener(GameEvent.GAME_ACTIVE, OnGameActive);
+        Messenger.AddListener(GameEvent.GAME_INACTIVE, OnGameInActive);
 
+    }
+    
     // Update is called once per frame
     void Update()
     {

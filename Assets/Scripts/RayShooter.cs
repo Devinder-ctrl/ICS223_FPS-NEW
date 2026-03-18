@@ -1,11 +1,11 @@
 using System.Collections;
 using UnityEngine;
 
-public class RayShooter : MonoBehaviour
+public class RayShooter : ActiveDuringGameplay
 {
    
     private Camera cam;
-    [SerializeField]
+    //[SerializeField]
    // private int aimSize = 16;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -16,33 +16,41 @@ public class RayShooter : MonoBehaviour
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
     }
+    private void Awake()
+    {
+        Messenger.AddListener(GameEvent.SHOTS_FIRED, OnGameActive);
+        Messenger.AddListener(GameEvent.SHOTS_NOTFIRED, OnGameInActive);
+
+    }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Debug.Log("shooting");
-            Vector3 point = new Vector3(cam.pixelWidth / 2, cam.pixelHeight / 2, 0);
-            Ray ray = cam.ScreenPointToRay(point);
-            RaycastHit hit;
-            if(Physics.Raycast(ray, out hit))
+       
+            if (Input.GetMouseButtonDown(0))
             {
-                GameObject hitObject = hit.transform.gameObject;
-                ReactiveTarget target = hitObject.GetComponent<ReactiveTarget>();
-                //is this object our enemy
-                if(target != null)
+                Debug.Log("shooting");
+                Vector3 point = new Vector3(cam.pixelWidth / 2, cam.pixelHeight / 2, 0);
+                Ray ray = cam.ScreenPointToRay(point);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit))
                 {
-                    target.ReactToHit();
+                    GameObject hitObject = hit.transform.gameObject;
+                    ReactiveTarget target = hitObject.GetComponent<ReactiveTarget>();
+                    //is this object our enemy
+                    if (target != null)
+                    {
+                        target.ReactToHit();
+                    }
+                    else
+                    {
+                        //visually indicate where there was a hit 
+                        StartCoroutine(CreateTempSphereIndicator(hit.point));
+                    }
+
                 }
-                else
-                {
-                    //visually indicate where there was a hit 
-                    StartCoroutine(CreateTempSphereIndicator(hit.point));
-                }
-                   
             }
-        }
+        
     }
     private IEnumerator CreateTempSphereIndicator(Vector3 hitPosition)
     {

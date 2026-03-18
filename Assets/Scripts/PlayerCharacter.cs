@@ -3,7 +3,8 @@ using UnityEngine;
 
     public class PlayerCharacter : MonoBehaviour
     {
-        private int health;
+    [SerializeField] private UIManager UI;
+    private int health;
     private int maxHealth = 5;
         // Use this for initialization
         void Start()
@@ -12,6 +13,8 @@ using UnityEngine;
         }
         public void Hit()
         {
+        if (health > 0)
+            Messenger<float>.Broadcast(GameEvent.HEALTH_CHANGED, (float)health);
             health -= 1;
             Debug.Log("Health: " + health);
             if (health == 0)

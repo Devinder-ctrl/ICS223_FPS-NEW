@@ -12098,7 +12098,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd542e0118b1be04d9b3ba66b227bb98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 1995309782}
   settingsPopup: {fileID: 375250159}
 --- !u!1 &1490098808
 GameObject:
@@ -14169,6 +14168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34e5327fdfe73da49bee5c90239b61b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UI: {fileID: 0}
 --- !u!43 &1772583203
 Mesh:
   m_ObjectHideFlags: 0
@@ -15631,6 +15631,7 @@ MonoBehaviour:
   enemyPrefab: {fileID: 5684934456289690012, guid: 94e74d9cabb409747b5b5662eb364a4f, type: 3}
   iguanaPrefab: {fileID: 141256, guid: b4806bcfd71324778b360c0299195b34, type: 3}
   iguanaSpawnPt: {fileID: 1694309687}
+  difficultySlider: {fileID: 1279868405}
   enemyInstantces: []
   iguanaInstantces: []
 --- !u!4 &1990124054

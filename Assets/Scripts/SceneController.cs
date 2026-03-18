@@ -25,7 +25,7 @@ public class SceneController : MonoBehaviour
     {
         Messenger.AddListener(GameEvent.ENEMY_DEAD, OnEnemyDead);
         Messenger<int>.AddListener(GameEvent.DIFFICULTY_CHANGED, OnDifficultyChanged);
-
+      
     }
     private void OnDestroy()
     {
@@ -90,7 +90,7 @@ public class SceneController : MonoBehaviour
             iguanaInstantces[i] = iguana;
         }
         }
-        void spawn()
+    void spawn()
     {
         for (int i = 0; i < numberOfEnemies; i++)
         {
@@ -109,11 +109,7 @@ public class SceneController : MonoBehaviour
                    
                         enemyInstantces[i] = enemy;
                     }
-                  
-
-                
-            
-        
+    
     }
     private void OnDifficultyChanged(int newDifficulty)
     {
