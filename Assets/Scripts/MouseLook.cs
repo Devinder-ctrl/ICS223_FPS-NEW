@@ -29,7 +29,7 @@ public class MouseLook : ActiveDuringGameplay
         Messenger.AddListener(GameEvent.GAME_INACTIVE, OnGameInActive);
 
     }
-    
+  
     // Update is called once per frame
     void Update()
     {

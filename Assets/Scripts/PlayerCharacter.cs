@@ -14,8 +14,8 @@ using UnityEngine;
         public void Hit()
         {
         if (health > 0)
-            Messenger<float>.Broadcast(GameEvent.HEALTH_CHANGED, (float)health);
             health -= 1;
+            Messenger<float>.Broadcast(GameEvent.HEALTH_CHANGED, (float)health);
             Debug.Log("Health: " + health);
             if (health == 0)
             {

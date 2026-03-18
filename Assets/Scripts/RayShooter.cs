@@ -18,8 +18,8 @@ public class RayShooter : ActiveDuringGameplay
     }
     private void Awake()
     {
-        Messenger.AddListener(GameEvent.SHOTS_FIRED, OnGameActive);
-        Messenger.AddListener(GameEvent.SHOTS_NOTFIRED, OnGameInActive);
+        Messenger.AddListener(GameEvent.GAME_ACTIVE, OnGameActive);
+        Messenger.AddListener(GameEvent.GAME_INACTIVE, OnGameInActive);
 
     }
 

@@ -44,8 +44,13 @@ public class UIManager : MonoBehaviour {
     {
         Debug.Log("health is " + healthPercent);
         
-        healthBar.fillAmount -= healthPercent/100;
-        healthBar.color = Color.Lerp(Color.green, Color.red, healthPercent);
+       // healthBar.fillAmount = healthPercent;
+       if(healthPercent < 5)
+        healthBar.color = Color.Lerp(Color.green, Color.yellow,healthPercent/100);
+       else if (healthPercent < 3)
+        {
+            healthBar.color = Color.red;
+        }
     }
     private void OnHealthChanged(float healthPercent)
     {
@@ -56,6 +61,7 @@ public class UIManager : MonoBehaviour {
         if (popupsActive == 0)
         {
             SetGameActive(false);
+            
         }
         popupsActive++;
     }
@@ -74,6 +80,7 @@ public class UIManager : MonoBehaviour {
     {
         if (active)
         {
+            Messenger.Broadcast(GameEvent.GAME_ACTIVE);
             Time.timeScale = 1;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -81,6 +88,7 @@ public class UIManager : MonoBehaviour {
         }
         else
         {
+            Messenger.Broadcast(GameEvent.GAME_INACTIVE);
             Time.timeScale = 0;
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
