@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private SettingsPopup settingsPopup;
     [SerializeField] private GameOverPopup gameOverPopup;
     private int popupsActive = 0;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -40,22 +41,31 @@ public class UIManager : MonoBehaviour {
         Messenger<float>.AddListener(GameEvent.HEALTH_CHANGED, OnHealthChanged);
         Messenger.AddListener(GameEvent.POPUP_OPENED, OnPopupOpened);
         Messenger.AddListener(GameEvent.POPUP_CLOSED, OnPopupClosed);
-      
+
+    }
+    private void OnDestroy()
+    {
+        Messenger<float>.RemoveListener(GameEvent.HEALTH_CHANGED, OnHealthChanged);
+        Messenger.RemoveListener(GameEvent.POPUP_OPENED, OnPopupOpened);
+        Messenger.RemoveListener(GameEvent.POPUP_CLOSED, OnPopupClosed);
+
     }
     private void UpdateHealth(float healthPercent)
     {
         Debug.Log("health is " + healthPercent);
-        
-       // healthBar.fillAmount = healthPercent;
-       if(healthPercent < 5)
-        healthBar.color = Color.Lerp(Color.green, Color.yellow,healthPercent/100);
-       else if (healthPercent < 3)
+        healthBar.fillAmount = healthPercent;
+
+        if (healthPercent > 0.5) {
+            healthBar.color = Color.Lerp(Color.yellow, Color.green, (healthPercent - 0.5f) * 2);
+        }
+        else
         {
-            healthBar.color = Color.red;
+            healthBar.color = Color.Lerp(Color.red, Color.yellow, (healthPercent * 2));
         }
     }
     private void OnHealthChanged(float healthPercent)
     {
+
        UpdateHealth(healthPercent);
     }
     private void OnPopupOpened()

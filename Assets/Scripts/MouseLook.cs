@@ -29,7 +29,13 @@ public class MouseLook : ActiveDuringGameplay
         Messenger.AddListener(GameEvent.GAME_INACTIVE, OnGameInActive);
 
     }
-  
+    private void OnDestroy()
+    {
+        Messenger.RemoveListener(GameEvent.GAME_ACTIVE, OnGameActive);
+        Messenger.RemoveListener(GameEvent.GAME_INACTIVE, OnGameInActive);
+
+
+    }
     // Update is called once per frame
     void Update()
     {

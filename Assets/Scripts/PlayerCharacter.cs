@@ -33,7 +33,8 @@ using UnityEngine;
         {
         if (health > 0)
             health -= 1;
-            Messenger<float>.Broadcast(GameEvent.HEALTH_CHANGED, (float)health);
+        float healthPercent = ((float)health) / maxHealth;
+        Messenger<float>.Broadcast(GameEvent.HEALTH_CHANGED, healthPercent);
             Debug.Log("Health: " + health);
             if (health == 0)
             {
