@@ -6,6 +6,7 @@ public class FPSInput : MonoBehaviour
     private float gravity = -9.8f;
     private float speed = 9.0f;
     [SerializeField] private CharacterController charController;
+    private float pushForce = 5.0f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -31,5 +32,13 @@ public class FPSInput : MonoBehaviour
 
         movement = transform.TransformDirection(movement);
         charController.Move(movement);
+    }
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        Rigidbody body = hit.collider.attachedRigidbody;
+        if(body != null && !body.isKinematic)
+        {
+            body.linearVelocity = hit.moveDirection * pushForce;
+        }
     }
 }

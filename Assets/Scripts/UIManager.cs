@@ -1,4 +1,4 @@
-using UnityEngine.UI;
+﻿using UnityEngine.UI;
 using TMPro;
 using UnityEngine;
 using System.Collections;
@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private Image crossHair;
     [SerializeField] private OptionsPopup optionsPopup;
     [SerializeField] private SettingsPopup settingsPopup;
+    [SerializeField] private GameOverPopup gameOverPopup;
     private int popupsActive = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -39,6 +40,7 @@ public class UIManager : MonoBehaviour {
         Messenger<float>.AddListener(GameEvent.HEALTH_CHANGED, OnHealthChanged);
         Messenger.AddListener(GameEvent.POPUP_OPENED, OnPopupOpened);
         Messenger.AddListener(GameEvent.POPUP_CLOSED, OnPopupClosed);
+      
     }
     private void UpdateHealth(float healthPercent)
     {
@@ -95,6 +97,10 @@ public class UIManager : MonoBehaviour {
             crossHair.gameObject.SetActive(false);
         
     }
+    }
+    public void ShowGameOverPopup()
+    {
+        gameOverPopup.Open();
     }
     }
 

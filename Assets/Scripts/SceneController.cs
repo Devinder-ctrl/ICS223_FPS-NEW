@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 public class SceneController : MonoBehaviour
 {
     private int score = 0;
@@ -25,14 +26,21 @@ public class SceneController : MonoBehaviour
     {
         Messenger.AddListener(GameEvent.ENEMY_DEAD, OnEnemyDead);
         Messenger<int>.AddListener(GameEvent.DIFFICULTY_CHANGED, OnDifficultyChanged);
-      
+        Messenger.AddListener(GameEvent.PLAYER_DEAD, OnPlayerDead);
+        Messenger.AddListener(GameEvent.RESTART_GAME, OnRestartGame);
     }
     private void OnDestroy()
     {
         Messenger.RemoveListener(GameEvent.ENEMY_DEAD, OnEnemyDead);
         Messenger<int>.RemoveListener(GameEvent.DIFFICULTY_CHANGED, OnDifficultyChanged);
-    }
+        Messenger.RemoveListener(GameEvent.PLAYER_DEAD, OnPlayerDead);
+        Messenger.RemoveListener(GameEvent.RESTART_GAME, OnRestartGame);
 
+    }
+    private void OnPlayerDead()
+    {
+        manager.ShowGameOverPopup();
+    }
     private void OnEnemyDead()
     {
         score++;
@@ -123,5 +131,9 @@ public class SceneController : MonoBehaviour
    public int GetDifficulty()
     {
         return PlayerPrefs.GetInt("difficulty", 1);
+    }
+    public void OnRestartGame()
+    {
+        SceneManager.LoadScene(0);
     }
 }
