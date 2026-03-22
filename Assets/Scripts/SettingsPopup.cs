@@ -10,25 +10,21 @@ public class SettingsPopup : BasePopup
     [SerializeField] Button CancelButton;
     [SerializeField] Slider difficultySlider;
     [SerializeField] OptionsPopup optionsPopup;
-
     [SerializeField] TextMeshProUGUI difficultyLabel;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+   
+    public void OnOKButton()
     {
-        
-    }
-
-        public void OnOKButton()
-    {
-        gameObject.SetActive(false);
+     
         optionsPopup.Open();
         PlayerPrefs.SetInt("difficulty", (int)difficultySlider.value);
         Messenger<int>.Broadcast(GameEvent.DIFFICULTY_CHANGED, (int)difficultySlider.value);
+        Close();
     }
     public void OnCancelButton()
     {
-        gameObject.SetActive(false);
+      
         optionsPopup.Open();
+        Close();
 
     }
     public void UpdateDifficulty(float difficulty)
@@ -50,9 +46,5 @@ public class SettingsPopup : BasePopup
         UpdateDifficulty(difficultySlider.value);
     }
  
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }

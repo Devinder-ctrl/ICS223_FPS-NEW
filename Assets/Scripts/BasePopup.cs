@@ -23,6 +23,7 @@ public class BasePopup : MonoBehaviour
         {
             this.gameObject.SetActive(false);
             Messenger.Broadcast(GameEvent.POPUP_CLOSED);
+           
         }
         else
         {
